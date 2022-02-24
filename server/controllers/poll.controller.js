@@ -83,7 +83,7 @@ module.exports = {
               console.log("Find Polls By Keyword Failed")
               res.json({message: "Error in findAllPollsByKeyword", error: err})
           });
-  },
+    },
 
     deletePoll: (req, res) => {
         Poll.deleteOne({_id: req.params.pollid})
@@ -141,7 +141,7 @@ module.exports = {
             message: err.message,
           });
         }
-      }
+    }
 
     //there is no edit poll function as we don't allow users to edit poll question once its created
 
