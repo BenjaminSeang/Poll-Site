@@ -1,0 +1,1 @@
+const ColorPalette = ["cfffb3","ade25d","d5e758","fcec52","3b7080","3b6462","3a5743","48554e","555358"]
