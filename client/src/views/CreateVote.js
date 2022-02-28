@@ -13,12 +13,21 @@ const CreatePollContainer = styled.div`
     box-shadow: 3px 3px 10px #555358;
 `
 
-const submitPollHandler = () => {
-    //Logic
-}
 
+const CreateVote = (props) => {
 
+    const [pollOptions, setPollOptions] = useState([{option:""}]);
+    const [errors, setErrors] = useState({});
 
+    const [newPoll, setNewPoll] = useState({
+        pollQuestion: "",
+        options: [
+            {
+                option: "",
+                votes: ""
+            }
+        ]
+    })
 
 
 const CreateVote = (props) => {
