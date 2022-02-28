@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link } from '@reach/router';
-import { BrowserRouter } from 'react-router-dom/react-router-dom.development';
+import { BrowserRouter, Route } from 'react-router-dom/react-router-dom.development';
 
 const PollsContainer = styled.div`
     margin-right: 5em;
@@ -54,9 +53,11 @@ const Polls = (props) => {
                 {
                     polls?
                     polls.map( (poll, index) => (
-                    <Link to="" key={index}>
+                    
+                    // Route to render this question
+                    <div key={index}>
                         <PollLink >{poll.pollQuestion}</PollLink>
-                    </Link>
+                    </div>
                     
                     )) 
                     : null
