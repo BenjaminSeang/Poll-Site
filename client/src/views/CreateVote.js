@@ -14,21 +14,6 @@ const CreatePollContainer = styled.div`
 `
 
 
-const CreateVote = (props) => {
-
-    const [pollOptions, setPollOptions] = useState([{option:""}]);
-    const [errors, setErrors] = useState({});
-
-    const [newPoll, setNewPoll] = useState({
-        pollQuestion: "",
-        options: [
-            {
-                option: "",
-                votes: ""
-            }
-        ]
-    })
-
 
 const CreateVote = (props) => {
 
@@ -77,5 +62,3 @@ const CreateVote = (props) => {
         </div>
     )
 }
-
-export default CreateVote
