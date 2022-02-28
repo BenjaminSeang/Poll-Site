@@ -13,13 +13,16 @@ const CreatePollContainer = styled.div`
     box-shadow: 3px 3px 10px #555358;
 `
 
-const submitPollHandler = () => {
-    //Logic
+const addNewInput = () => {
+    let newDiv = document.createElement("div");
+    newDiv.innerHTML = "<label htmlFor='option'>Options</label><input name='option' type='text' />"
+    document.getElementById("pollForm").appendChild(newDiv);
 }
 
 
-
-
+const submitPollHandler = () => {
+    // Logic
+}
 
 const CreateVote = (props) => {
 
@@ -34,7 +37,7 @@ const CreateVote = (props) => {
             <CreatePollContainer>
             <div>
                 <h1>Poll Form</h1>
-                <div>
+                <div id="pollForm">
                     <div>
                         <div>
                             <label>Poll question</label>
@@ -43,17 +46,20 @@ const CreateVote = (props) => {
                                 placeholder='What is the best sandwhich at McDonalds'/>
                         </div>
                         <div>
-                            <label>Options</label>
-                            <input />
+                            <label htmlFor="option">Option</label>
+                            <input 
+                                name="option"
+                                type="text"
+                                />
+                            
                         </div>
+                        <Button 
+                            buttonText={"+"}
+                            action={addNewInput}
+                            color={"#555358"}
+                            style={{color: "#FFFFFF"}}
+                            />
                     </div>
-                    <Button 
-                        buttonText={"+"}
-                        action={submitPollHandler}
-                        color={"#555358"}
-                        style={{color: "#FFFFFF"}}
-                        />
-
                 </div>
                 <Button 
                     buttonText={"Submit"}

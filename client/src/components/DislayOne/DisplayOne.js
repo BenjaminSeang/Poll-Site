@@ -28,7 +28,11 @@ const WhiteCircle = styled.div`
 
 const DisplayOne = (props) => {
 
+    const {pollid} = props;
+
     const submitHandler = () => {
+
+        
 
     }
     return(

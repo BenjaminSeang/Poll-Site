@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-// import axios from 'axios';
+import axios from 'axios';
+import { Link } from '@reach/router';
+import { BrowserRouter } from 'react-router-dom/react-router-dom.development';
 
 const PollsContainer = styled.div`
     margin-right: 5em;
@@ -32,14 +34,16 @@ const stub_data = 123
 const Polls = (props) => {
 
     const [polls, setPolls] = useState([])
+
     useEffect(() => {
-    setPolls(stub_data)
-        //axios call
-        // axios.get("http://localhost:8000/api/allPolls")
-        //     .then((res) => {
-        //         console.log(stub_data);
-        //     })
-        //     .catch((err) => console.log("Display all, useEffect: " + err))
+    // setPolls(stub_data)
+        // axios call
+        axios.get("http://localhost:8000/api/allPolls")
+            .then((res) => {
+                console.log(res.data);
+                setPolls(res.data);
+            })
+            .catch((err) => console.log("Display all, useEffect: " + err))
     }, [])
 
     return(
@@ -47,12 +51,16 @@ const Polls = (props) => {
         <PollsContainer >
             <PollsTitle>Live Polls</PollsTitle>
             <div>
-                <PollLink>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed?</PollLink>
-                <PollLink>Lorem ipsum dolor sit amet, consectetur adipiscing, do?</PollLink>
-                <PollLink>Lorem ipsum dolor sit amet, consectetur adipiscing, sed do?</PollLink>
-                <PollLinkClicked>How good is McDonald's</PollLinkClicked>
-                <PollLink>Lorem ipsum dolor sit amet, adipiscing elit, sed do?</PollLink>
-                <PollLink>Lorem ipsum dolor, consectetur adipiscing elit, sed do?</PollLink>
+                {
+                    polls?
+                    polls.map( (poll, index) => (
+                    <Link to="" key={index}>
+                        <PollLink >{poll.pollQuestion}</PollLink>
+                    </Link>
+                    
+                    )) 
+                    : null
+                } 
             </div>
         </PollsContainer>
     )
