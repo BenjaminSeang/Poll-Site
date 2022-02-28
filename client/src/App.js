@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './views/Home'
 import Registration from './views/Registration';
-import Login from './views/Login';
+import LogReg from './views/LogReg';
 import CreateVote from './views/CreateVote';
 import ManageVotes from './views/ManageVotes';
 
@@ -21,7 +21,7 @@ function App() {
             />
             <Route 
               path="/login" 
-              element={ <Login /> } 
+              element={ <LogReg /> } 
             />
             <Route 
               path="/createvote" 
