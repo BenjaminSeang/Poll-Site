@@ -3,7 +3,7 @@ import Header from '../components/Header/Header';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const CreatePollContainer = styled.div`
     margin: 0 auto;
@@ -17,141 +17,105 @@ const CreatePollContainer = styled.div`
 
 const CreateVote = (props) => {
 
-    const [pollList, setPollList] = useState([]);
-    const [pollOptions, setPollOptions] = useState([{option:""}]);
-    const [errors, setErrors] = useState({});
+    let navigate = useNavigate();
 
-    const [newPoll, setNewPoll] = useState({
-        pollQuestion: "",
-        options: [
-            {
-                option: "",
-                votes: ""
-            }
-        ]
-    })
+    const [options, setOptions] = useState([{option: ""}]);
 
-    const inputHandler = (event) => {
-        let newStateObject = {...newPoll};
-        newStateObject[event.target.name] = event.target.value;
-        setNewPoll(newStateObject);
-    }
+    const [pollQuestion, setPollQuestion] = useState("");
 
-    const submitPollHandler = (event) => {
-        event.preventDefault();
+    //const [newPoll, setNewPoll] = useState({});
 
-    }
+    const [errors, setError] = useState({})
 
-    const newPollHandler = (event) => 
-    {
-        event.preventDefault();
+    const optionHandler = (e, index) => {
+        const {name, value} = e.target;
+        const list = [...options];
+        list [index][name] = value;
+        setOptions(list);
+    };
 
-        axios.post('http://localhost:8000/api/polls/create',
-        newPoll,
-        {
-            withCredentials: true
-        })
-        .then ( (response) =>
-            {
-                console.log(response);
-                console.log(response.data);
-                
-                setNewPoll ({
-                        pollQuestion: "",
-                        options: [
-                            {
-                                option: "",
-                                votes: ""
-                            }]
-                    })
-                
-                Navigate("/");
-            })
-        .catch ( (error) => 
-            {
-                console.log(error);
-                setErrors(error.response.data.errors);
-            });
-    } 
-    
-    const addNewOption = () => {
-        setPollOptions([...pollOptions, {option: ""}])
-    }
-
-    const removeOption = (index) => {
-        const list = [...pollOptions];
+    const removeHandler = (index) => {
+        const list = [...options];
         list.splice(index, 1);
-        setPollOptions(list);
+        setOptions(list);
+    };
+
+    const addHandler = () => {
+        setOptions([ ...options, {option: ""} ]);
+    };
+
+    const pollQuestionHander = (e) => {
+        setPollQuestion(e.target.value);
     }
 
-    return(
+    const submitHandler = (e) => {
+        e.preventDefault();
 
+        let newObject = {pollQuestion: "", options:[]}
+        newObject.pollQuestion = pollQuestion;
+        newObject.options = options;
+
+        //setNewPoll(newObject);
+
+        //console.log(newPoll)
+        
+        axios.post("http://localhost:8000/api/polls/create", {pollQuestion, options}, {withCredentials: true})
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                //navigate("/");
+            })
+            .catch((err)=>{
+                console.log(err);
+                console.log("err.response:", err.response);
+                console.log("err.response.data:", err.response.data);
+                console.log("err.response.data.errors:", err.response.data.errors);
+                setError(err.response.data.errors)
+            })
+
+    }
+ 
+    return (
         <div>
             <Header />
-
-            <CreatePollContainer>
-                <form onSubmit={newPollHandler}>
-                    <h1>Poll Form</h1>
-                    <div id="pollForm">
+            <form onSubmit={submitHandler}>
+                <div>
+                    <label>Enter a topic for your poll:</label>
+                </div>
+                <input
+                    name = "pollQuestion"
+                    value = {pollQuestion}
+                    onChange = {(e) => pollQuestionHander(e)}
+                />
+                {options.map((option, i) => {
+                    return (
+                    <div key={i}>
                         <div>
-                            <div>
-                                <label>Poll question</label>
-                                <input 
-                                    style={{width: "22em"}}
-                                    placeholder='What is the best sandwhich at McDonalds'
-                                    onChange={inputHandler}/>
-                            </div>
-                            <div>
-                                {
-                                    pollOptions.map( (option,index) => 
-                                    (
-                                        <div key={index}>
-                                            <div>
-                                                <label htmlFor="option">Option</label>
-                                                <input 
-                                                    name="option"
-                                                    type="text" 
-                                                    onChange={inputHandler}/>
-                                                {
-                                                    pollOptions.length - 1 === index && pollOptions.length < 5 &&
-                                                    (
-                                                        <Button 
-                                                            buttonText={"+"}
-                                                            action={addNewOption}
-                                                            color={"#555358"}
-                                                            style={{color: "#FFFFFF"}}/>
-                                                    )
-                                                }
-                                            </div>
-                                            <div>
-                                                {
-                                                    pollOptions.length !== 1 && 
-                                                    (
-                                                        <Button 
-                                                            buttonText={"-"}
-                                                            action={removeOption}
-                                                            color={"#555358"}
-                                                            style={{color: "#FFFFFF"}}/>
-                                                    )
-                                                }
-                                            </div>
-                                            
-                                        </div>
-                                    ))
-                                }
-                            </div>
+                            <label> Option #{i+1} </label>
                         </div>
-                        <Button 
-                            buttonText={"Submit"}
-                            action={submitPollHandler}
-                            color={"#C4C4C4"}
-                            />
-                    </div>
-                </form>
+                        <input
+                            name="option"
+                            value={option.option}
+                            onChange={(e) => optionHandler(e, i)}
+                        />
+                        <div>
+                            {options.length !== 1 && 
+                            <button onClick={() => removeHandler(i)}>Remove</button>}
 
-            </CreatePollContainer>
+                            {options.length - 1 === i && 
+                            <button onClick={() => addHandler()}>Add</button>}
+                        </div>
+                    </div>
+                    );
+                })}
+                <button>Submit</button>
+            </form>
+
+            
         </div>
-    )
+    );
+
 }
 
 export default CreateVote;
+
