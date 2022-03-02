@@ -13,7 +13,7 @@ const Header = (props) => {
 
     const goHome = () => { navigate("/") }
     const goCreateVote = () => { navigate("/createvote") }
-    const goManageVotes = () => { navigate("/managevotes") }
+    const goManageVotes = () => { navigate(`/managevotes/${user.username}`) }
     const goLogIn = () => { navigate("/login") }
 
     const goLogout = (e) => {

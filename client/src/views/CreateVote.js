@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/Header/Header';
 import styled from 'styled-components';
-import Button from '../components/Button/Button';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
@@ -22,8 +21,6 @@ const CreateVote = (props) => {
     const [options, setOptions] = useState([{option: ""}]);
 
     const [pollQuestion, setPollQuestion] = useState("");
-
-    //const [newPoll, setNewPoll] = useState({});
 
     const [errors, setError] = useState({})
 
@@ -54,16 +51,12 @@ const CreateVote = (props) => {
         let newObject = {pollQuestion: "", options:[]}
         newObject.pollQuestion = pollQuestion;
         newObject.options = options;
-
-        //setNewPoll(newObject);
-
-        //console.log(newPoll)
         
         axios.post("http://localhost:8000/api/polls/create", {pollQuestion, options}, {withCredentials: true})
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
-                //navigate("/");
+                navigate("/");
             })
             .catch((err)=>{
                 console.log(err);
