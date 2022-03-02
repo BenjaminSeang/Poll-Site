@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import Polls from '../components/Polls/Polls';
 import SignUp from '../components/SignUp/SignUp';
-import DisplayOne from '../components/DislayOne/DisplayOne';
+import AllPolls from '../components/AllPolls/AllPolls';
 
 const Home = (props) => {
 
@@ -31,7 +31,7 @@ const Home = (props) => {
             {/* <hr style={{ border: "none", borderTop: "4px dotted gray"}}/> */}
             <SignUp />
             <div style={{display: "flex", justifyContent:'flex-end', marginTop: "6em", backgroundColor:'#D5E758', paddingTop: "3em"}}>
-                <DisplayOne />
+                <AllPolls />
                 <Polls />
             </div>
 

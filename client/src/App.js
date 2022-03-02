@@ -5,6 +5,7 @@ import Registration from './views/Registration';
 import LogReg from './views/LogReg';
 import CreateVote from './views/CreateVote';
 import ManageVotes from './views/ManageVotes';
+import PollDetail from './views/PollDetail';
 
 function App() {
   return (
@@ -28,8 +29,12 @@ function App() {
               element={ <CreateVote /> } 
             />
             <Route 
-              path="/managevotes" 
+              path="/managevotes/:username" 
               element={ <ManageVotes /> } 
+            />
+            <Route
+              path="/deatil/:pollid"
+              element={ <PollDetail/> }
             />
         </Routes>
       </BrowserRouter>
